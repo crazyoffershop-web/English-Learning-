@@ -1,0 +1,94 @@
+:root{
+  --bg1: #BEEAF5;
+  --bg2: #FFF1F6;
+  --card: #ffffff;
+  --glass: rgba(255,255,255,0.6);
+  --accent: #ff6b6b;
+  --primary: #2f86f0;
+  --muted: #475569;
+  --success: #2e7d32;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  background: linear-gradient(180deg,var(--bg1),var(--bg2));
+  padding:24px;
+}
+
+/* App container */
+.app{ width:100%; max-width:900px; }
+
+/* Header */
+.top{
+  position:relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent);
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+  margin-bottom:12px;
+  box-shadow:0 10px 30px rgba(37,63,97,0.06);
+}
+.mascot-area{ position:absolute; left:20px; top:-42px; width:140px; height:140px; display:flex; align-items:center; gap:8px; pointer-events:none; }
+#mascot{ width:110px; height:110px; display:block; }
+
+/* Title */
+h1{ margin:8px 0; color:var(--accent); font-size:22px; }
+
+/* Stage switch */
+.stage-switch{ display:flex; gap:8px; justify-content:center; margin-bottom:8px; }
+.stage-btn{ padding:8px 12px; border-radius:10px; border:none; cursor:pointer; background:#eef7ff; color:#04304b; font-weight:700; }
+.stage-btn.locked{ opacity:.5; cursor:not-allowed; }
+.stage-btn.active{ background:var(--primary); color:#fff; }
+
+/* Level info & progress */
+#level-info{ font-weight:800; color:var(--muted); margin-bottom:8px; }
+#progress-wrap{ height:14px; background:#e8f5ff; border-radius:12px; overflow:hidden; margin:10px 80px; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.03); }
+#progress-bar{ height:100%; width:0%; background:linear-gradient(90deg,#ffd54f,#ff8a65); transition:width .45s ease; }
+#trophy-line{ margin-top:8px; display:flex; gap:12px; justify-content:center; align-items:center; color:#333; font-weight:800; }
+
+/* Cards & glass effect */
+.card{ background:var(--card); border-radius:14px; padding:14px; margin:12px 0; box-shadow:0 8px 20px rgba(31,41,55,0.06); }
+.glass{ background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7)); backdrop-filter: blur(6px); }
+
+/* Word card (image + text) */
+.word-card{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+.card img{ width:76%; max-width:420px; height:auto; border-radius:12px; background:transparent; padding:6px; box-shadow:0 8px 16px rgba(0,0,0,0.06); }
+
+/* Question text */
+.question-text{ font-size:20px; font-weight:800; color:#243b55; text-align:center; margin-top:6px; }
+
+/* Controls */
+.controls{ display:flex; gap:8px; margin-top:6px; }
+.mini-btn{ padding:8px 12px; border-radius:10px; border:none; background:#f3f6fb; cursor:pointer; font-weight:700; }
+
+/* Options */
+.options{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:10px; }
+.options button{ min-width:170px; padding:14px 18px; border-radius:12px; border:none; background:#eef7ff; color:#04304b; font-weight:900; cursor:pointer; box-shadow:0 8px 18px rgba(79,157,235,0.06); transition:transform .12s ease; }
+.options button:hover{ transform: translateY(-4px); }
+.options button.correct{ background: linear-gradient(90deg,#a8e6cf,#66bb6a); color:#fff; transform:scale(1.03); }
+.options button.wrong{ background: linear-gradient(90deg,#ffb3b3,#ff6b6b); color:#fff; transform: rotate(-2deg); }
+
+/* Result message */
+.result{ margin-top:12px; font-weight:900; text-align:center; min-height:28px; font-size:18px; transition: all .18s ease; }
+
+/* Nav */
+.nav-row{ display:flex; justify-content:space-between; gap:8px; margin-top:8px; }
+.nav-btn{ flex:1; padding:12px; border-radius:12px; border:none; background:#e8f0ff; color:#0b2545; font-weight:800; cursor:pointer; }
+.nav-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+
+/* Modal (progress) */
+.modal{ position:fixed; left:0; top:0; right:0; bottom:0; display:flex; justify-content:center; align-items:center; background:rgba(0,0,0,0.4); z-index:1000; }
+.modal-card{ background:#fff; border-radius:12px; padding:20px; width:90%; max-width:420px; box-shadow:0 12px 40px rgba(0,0,0,0.2); }
+.modal h2{ margin-top:0; }
+.modal-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+.hidden{ display:none; }
+
+@media (max-width:720px){
+  .card img{ max-width:320px; }
+  .options button{ min-width:120px; }
+  .mascot-area{ left:8px; top:-36px; width:100px; height:100px; }
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <title>English Kids — Learn & Play (PWA)</title>
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#BEEAF5"/>
+
+  <!-- basic styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- icons for standalone -->
+  <link rel="icon" href="icons/icon-192.png" />
+</head>
+<body>
+  <!-- MAIN APP (same structure we used) -->
+  <div class="app">
+    <header class="top">
+      <div class="mascot-area">
+        <!-- Mascot SVG -->
+        <svg id="mascot" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="100" cy="82" r="60" fill="#FFDDB5"/>
+          <ellipse cx="100" cy="140" rx="68" ry="28" fill="#FFF2CC"/>
+          <circle cx="80" cy="78" r="7" fill="#2b2b2b"/>
+          <circle cx="120" cy="78" r="7" fill="#2b2b2b"/>
+          <path d="M78 92 q22 14 44 0" stroke="#2b2b2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <rect x="36" y="144" rx="14" ry="14" width="128" height="36" fill="#FFF0C6"/>
+          <text x="100" y="168" text-anchor="middle" font-size="16" font-weight="700" fill="#7a4b00">Buddy</text>
+        </svg>
+      </div>
+
+      <h1>English Kids — Learn & Play</h1>
+
+      <div class="stage-switch">
+        <button id="stage1Btn" class="stage-btn active">Stage 1</button>
+        <button id="stage2Btn" class="stage-btn locked">Stage 2 🔒</button>
+        <button id="progressBtn" class="stage-btn">Progress</button>
+      </div>
+
+      <div id="level-info">Level <span id="level-number">1</span> / <span id="level-total">100</span></div>
+      <div id="progress-wrap"><div id="progress-bar"></div></div>
+      <div id="trophy-line"><div id="stars">⭐ 0</div><div id="cups"></div></div>
+    </header>
+
+    <main>
+      <section class="card glass word-card">
+        <img id="word-image" src="" alt="word image" />
+        <div id="question-text" class="question-text">اضغط على الإجابة الصحيحة للمتابعة</div>
+
+        <div class="controls">
+          <button id="speak-btn" class="mini-btn">🔊</button>
+          <button id="show-answer-btn" class="mini-btn">💡</button>
+        </div>
+      </section>
+
+      <section class="card glass">
+        <div id="options" class="options" role="list"></div>
+        <div id="result" class="result" aria-live="polite"></div>
+      </section>
+
+      <div class="nav-row">
+        <button id="prev-btn" class="nav-btn">⬅ Prev</button>
+        <button id="reset-btn" class="nav-btn">🔄 Restart</button>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <small>Progress saved locally • Types: MCQ / Missing / True-False</small>
+    </footer>
+  </div>
+
+  <!-- Progress modal -->
+  <div id="progress-modal" class="modal hidden" role="dialog" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Progress Dashboard</h2>
+      <div id="progress-stats">
+        <p>Stage: <strong id="dash-stage">1</strong></p>
+        <p>Stage 1 completed questions: <strong id="dash-stage1-completed">0</strong> / 100</p>
+        <p>Stage 2 completed questions: <strong id="dash-stage2-completed">0</strong> / 100</p>
+        <p>Total stars: <strong id="dash-stars">0</strong></p>
+        <p>Total cups: <strong id="dash-cups">0</strong></p>
+        <p>Overall progress: <strong id="dash-percent">0%</strong></p>
+      </div>
+      <div class="modal-actions">
+        <button id="close-progress" class="stage-btn">Close</button>
+        <button id="export-progress" class="stage-btn">Export (console)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- audio -->
+  <audio id="snd-good" src="https://actions.google.com/sounds/v1/cartoon/pop.ogg" preload="auto"></audio>
+  <audio id="snd-bad" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+
+  <!-- scripts -->
+  <script src="script.js"></script>
+
+  <!-- register service worker for offline / installability -->
+  <script>
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('service-worker.js')
+        .then(()=> console.log('ServiceWorker registered'))
+        .catch(e => console.warn('SW registration failed', e));
+    }
+  </script>
+</body>
+</html>

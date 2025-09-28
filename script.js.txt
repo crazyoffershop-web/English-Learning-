@@ -1,0 +1,330 @@
+/* ---------- script.js (PWA-ready) ---------- */
+/* STORAGE KEY */
+const STORAGE_KEY = "kids_english_pwa_v1";
+
+/* BASE word bank (diverse) */
+const BASE = [
+  {word:"Apple", emoji:"🍎", cat:"fruit"},
+  {word:"Banana", emoji:"🍌", cat:"fruit"},
+  {word:"Orange", emoji:"🍊", cat:"fruit"},
+  {word:"Grapes", emoji:"🍇", cat:"fruit"},
+  {word:"Strawberry", emoji:"🍓", cat:"fruit"},
+  {word:"Watermelon", emoji:"🍉", cat:"fruit"},
+  {word:"Lemon", emoji:"🍋", cat:"fruit"},
+  {word:"Peach", emoji:"🍑", cat:"fruit"},
+  {word:"Pineapple", emoji:"🍍", cat:"fruit"},
+  {word:"Mango", emoji:"🥭", cat:"fruit"},
+  {word:"Cat", emoji:"🐱", cat:"animal"},
+  {word:"Dog", emoji:"🐶", cat:"animal"},
+  {word:"Lion", emoji:"🦁", cat:"animal"},
+  {word:"Tiger", emoji:"🐯", cat:"animal"},
+  {word:"Elephant", emoji:"🐘", cat:"animal"},
+  {word:"Monkey", emoji:"🐵", cat:"animal"},
+  {word:"Giraffe", emoji:"🦒", cat:"animal"},
+  {word:"Zebra", emoji:"🦓", cat:"animal"},
+  {word:"Bear", emoji:"🐻", cat:"animal"},
+  {word:"Rabbit", emoji:"🐰", cat:"animal"},
+  {word:"Cow", emoji:"🐮", cat:"animal"},
+  {word:"Sheep", emoji:"🐑", cat:"animal"},
+  {word:"Pig", emoji:"🐷", cat:"animal"},
+  {word:"Duck", emoji:"🦆", cat:"animal"},
+  {word:"Frog", emoji:"🐸", cat:"animal"},
+  {word:"Fish", emoji:"🐟", cat:"animal"},
+  {word:"Whale", emoji:"🐋", cat:"animal"},
+  {word:"Octopus", emoji:"🐙", cat:"animal"},
+  {word:"Butterfly", emoji:"🦋", cat:"animal"},
+  {word:"Turtle", emoji:"🐢", cat:"animal"},
+  {word:"Car", emoji:"🚗", cat:"transport"},
+  {word:"Bus", emoji:"🚌", cat:"transport"},
+  {word:"Train", emoji:"🚆", cat:"transport"},
+  {word:"Plane", emoji:"✈️", cat:"transport"},
+  {word:"Boat", emoji:"⛵", cat:"transport"},
+  {word:"Bicycle", emoji:"🚲", cat:"transport"},
+  {word:"Motorcycle", emoji:"🏍️", cat:"transport"},
+  {word:"Helicopter", emoji:"🚁", cat:"transport"},
+  {word:"Truck", emoji:"🚚", cat:"transport"},
+  {word:"Tractor", emoji:"🚜", cat:"transport"},
+  {word:"Chair", emoji:"🪑", cat:"object"},
+  {word:"Table", emoji:"🛋️", cat:"object"},
+  {word:"Bed", emoji:"🛏️", cat:"object"},
+  {word:"Lamp", emoji:"💡", cat:"object"},
+  {word:"Book", emoji:"📚", cat:"object"},
+  {word:"Pen", emoji:"🖊️", cat:"object"},
+  {word:"Pencil", emoji:"✏️", cat:"object"},
+  {word:"Phone", emoji:"📱", cat:"object"},
+  {word:"Clock", emoji:"⏰", cat:"object"},
+  {word:"Camera", emoji:"📷", cat:"object"},
+  {word:"Red", emoji:"🔴", cat:"color"},
+  {word:"Blue", emoji:"🔵", cat:"color"},
+  {word:"Green", emoji:"🟢", cat:"color"},
+  {word:"Yellow", emoji:"🟡", cat:"color"},
+  {word:"OrangeColor", emoji:"🟠", cat:"color"},
+  {word:"Purple", emoji:"🟣", cat:"color"},
+  {word:"Black", emoji:"⚫", cat:"color"},
+  {word:"White", emoji:"⚪", cat:"color"},
+  {word:"Pink", emoji:"🩷", cat:"color"},
+  {word:"Brown", emoji:"🟤", cat:"color"},
+  {word:"One", emoji:"1️⃣", cat:"number"},
+  {word:"Two", emoji:"2️⃣", cat:"number"},
+  {word:"Three", emoji:"3️⃣", cat:"number"},
+  {word:"Four", emoji:"4️⃣", cat:"number"},
+  {word:"Five", emoji:"5️⃣", cat:"number"},
+  {word:"Six", emoji:"6️⃣", cat:"number"},
+  {word:"Seven", emoji:"7️⃣", cat:"number"},
+  {word:"Eight", emoji:"8️⃣", cat:"number"},
+  {word:"Nine", emoji:"9️⃣", cat:"number"},
+  {word:"Ten", emoji:"🔟", cat:"number"},
+  {word:"Pizza", emoji:"🍕", cat:"food"},
+  {word:"Burger", emoji:"🍔", cat:"food"},
+  {word:"Cake", emoji:"🍰", cat:"food"},
+  {word:"Cookie", emoji:"🍪", cat:"food"},
+  {word:"Milk", emoji:"🥛", cat:"drink"},
+  {word:"Juice", emoji:"🧃", cat:"drink"},
+  {word:"Water", emoji:"💧", cat:"drink"},
+  {word:"Sushi", emoji:"🍣", cat:"food"},
+  {word:"Pasta", emoji:"🍝", cat:"food"},
+  {word:"Sandwich", emoji:"🥪", cat:"food"},
+  {word:"Sun", emoji:"☀️", cat:"nature"},
+  {word:"Moon", emoji:"🌙", cat:"nature"},
+  {word:"Star", emoji:"⭐", cat:"nature"},
+  {word:"Tree", emoji:"🌳", cat:"nature"},
+  {word:"Flower", emoji:"🌸", cat:"nature"},
+  {word:"Rain", emoji:"🌧️", cat:"nature"},
+  {word:"Snow", emoji:"❄️", cat:"nature"},
+  {word:"Cloud", emoji:"☁️", cat:"nature"},
+  {word:"Mountain", emoji:"⛰️", cat:"place"},
+  {word:"Beach", emoji:"🏖️", cat:"place"},
+  {word:"School", emoji:"🏫", cat:"place"},
+  {word:"Hospital", emoji:"🏥", cat:"place"},
+  {word:"Doctor", emoji:"👩‍⚕️", cat:"people"},
+  {word:"Teacher", emoji:"👩‍🏫", cat:"people"},
+  {word:"Police", emoji:"👮‍♂️", cat:"people"},
+  {word:"Farmer", emoji:"🧑‍🌾", cat:"people"},
+  {word:"Artist", emoji:"🧑‍🎨", cat:"people"},
+  {word:"Run", emoji:"🏃‍♂️", cat:"action"},
+  {word:"Jump", emoji:"🤾‍♂️", cat:"action"},
+  {word:"Swim", emoji:"🏊‍♀️", cat:"action"},
+  {word:"Sing", emoji:"🎤", cat:"action"},
+  {word:"Dance", emoji:"🕺", cat:"action"}
+];
+
+/* helpers */
+function shuffle(a){ return a.slice().sort(()=>Math.random()-0.5); }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function emojiToDataURL(emoji, size=360){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'>
+    <style>text{font-size:${Math.floor(size*0.75)}px; font-family:Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif;}</style>
+    <rect width='100%' height='100%' fill='transparent'/>
+    <text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle'>${emoji}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* generate unique questions for both stages */
+function genQuestions(base, count, difficulty, used){
+  const out = []; const pool = shuffle(base.slice()); let p=0, attempts=0;
+  while(out.length < count && attempts < 30000){
+    attempts++;
+    if(p >= pool.length){ p=0; pool.push(...shuffle(base)); }
+    const itm = pool[p++];
+    // choose type
+    let type; if(difficulty===1){ const r=Math.random(); type = r<0.6?'mcq':(r<0.9?'missing':'truefalse'); }
+    else { const r=Math.random(); type = r<0.4?'mcq':(r<0.85?'missing':'truefalse'); }
+
+    if(type === 'mcq'){
+      let qText = itm.cat === 'color' ? 'What color is this?' :
+                  itm.cat === 'number' ? 'Which number is this?' :
+                  itm.cat === 'fruit' ? 'What fruit is this?' :
+                  itm.cat === 'animal' ? 'Which animal is this?' :
+                  itm.cat === 'transport' ? 'Which transport is this?' :
+                  itm.cat === 'action' ? 'Which action is this?' :
+                  itm.cat === 'people' ? 'Who is this?' :
+                  itm.cat === 'place' ? 'Which place is this?' : 'What is this?';
+      const sig = `mcq|${qText}|${itm.word}`; if(used.has(sig)) continue;
+      const opts = [itm.word]; const same = base.filter(b=>b.cat===itm.cat && b.word!==itm.word).map(b=>b.word);
+      while(opts.length < 4 && same.length){ const c = same.splice(Math.floor(Math.random()*same.length),1)[0]; if(!opts.includes(c)) opts.push(c); }
+      while(opts.length < 4){ const c = pick(base).word; if(!opts.includes(c)) opts.push(c); }
+      out.push({type:'mcq', q:qText, answer:itm.word, options:shuffle(opts), emoji:itm.emoji});
+      used.add(sig);
+    } else if(type === 'missing'){
+      const w = itm.word.replace(/\s+/g,''); if(w.length <= 2) continue;
+      const hideIdx = Math.floor(Math.random()*(w.length-2))+1; const pattern = w.split('').map((c,i)=> i===hideIdx ? '_' : c).join('');
+      const correct = w[hideIdx].toUpperCase(); const sig = `missing|${pattern}|${w}`; if(used.has(sig)) continue;
+      const letters = new Set([correct]); while(letters.size < 4) letters.add(String.fromCharCode(65 + Math.floor(Math.random()*26)));
+      out.push({type:'missing', q:`Fill the missing letter: ${pattern}`, answer:correct, options:shuffle(Array.from(letters)), emoji:itm.emoji, fullWord:w});
+      used.add(sig);
+    } else {
+      const makeTrue = Math.random() < 0.7;
+      if(makeTrue){
+        const qText = `This is a ${itm.word}?`; const sig = `tf|${qText}|T`; if(used.has(sig)) continue;
+        out.push({type:'truefalse', q:qText, answer:'True', options:['True','False'], emoji:itm.emoji}); used.add(sig);
+      } else {
+        let other = pick(base).word; let ctr=0; while(other===itm.word && ctr<40){ other = pick(base).word; ctr++; }
+        const qText = `This is a ${other}?`; const sig = `tf|${qText}|F`; if(used.has(sig)) continue;
+        out.push({type:'truefalse', q:qText, answer:'False', options:['True','False'], emoji:itm.emoji}); used.add(sig);
+      }
+    }
+  }
+  return out;
+}
+
+/* build stages */
+const usedGlobal = new Set();
+const STAGE1 = genQuestions(BASE, 100, 1, usedGlobal);
+const STAGE2 = genQuestions(BASE, 100, 2, usedGlobal);
+/* safety fill */
+if(STAGE1.length < 100) while(STAGE1.length < 100) { const b = pick(BASE); STAGE1.push({type:'mcq', q:'What is this?', answer:b.word, options:shuffle([b.word,pick(BASE).word,pick(BASE).word,pick(BASE).word]), emoji:b.emoji}); }
+if(STAGE2.length < 100) while(STAGE2.length < 100) { const b = pick(BASE); STAGE2.push({type:'mcq', q:'What is this?', answer:b.word, options:shuffle([b.word,pick(BASE).word,pick(BASE).word,pick(BASE).word]), emoji:b.emoji}); }
+
+console.log('STAGE1', STAGE1.length, 'STAGE2', STAGE2.length);
+
+/* DOM elements */
+const els = {
+  progressBar: document.getElementById('progress-bar'),
+  levelNumber: document.getElementById('level-number'),
+  levelTotal: document.getElementById('level-total'),
+  wordImage: document.getElementById('word-image'),
+  qText: document.getElementById('question-text'),
+  speakBtn: document.getElementById('speak-btn'),
+  showAnswerBtn: document.getElementById('show-answer-btn'),
+  options: document.getElementById('options'),
+  result: document.getElementById('result'),
+  prevBtn: document.getElementById('prev-btn'),
+  resetBtn: document.getElementById('reset-btn'),
+  stage1Btn: document.getElementById('stage1Btn'),
+  stage2Btn: document.getElementById('stage2Btn'),
+  progressBtn: document.getElementById('progressBtn'),
+  modal: document.getElementById('progress-modal'),
+  closeProgress: document.getElementById('close-progress'),
+  exportProgress: document.getElementById('export-progress'),
+  dashStage: document.getElementById('dash-stage'),
+  dashStage1Completed: document.getElementById('dash-stage1-completed'),
+  dashStage2Completed: document.getElementById('dash-stage2-completed'),
+  dashStars: document.getElementById('dash-stars'),
+  dashCups: document.getElementById('dash-cups'),
+  dashPercent: document.getElementById('dash-percent'),
+  stars: document.getElementById('stars'),
+  cups: document.getElementById('cups'),
+  lockScreen: document.getElementById('lock-screen'),
+  mascot: document.getElementById('mascot')
+};
+
+/* state */
+let state = { stage:1, idx1:0, idx2:0, stars:0, cups:0, stage1Completed:false };
+
+/* storage */
+function loadState(){ try{ const s = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(s) state = Object.assign(state, s); }catch(e){} }
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+/* audio & speech */
+function playGood(){ const a = document.getElementById('snd-good'); if(a){ a.currentTime=0; a.play().catch(()=>{}); } }
+function playBad(){ const a = document.getElementById('snd-bad'); if(a){ a.currentTime=0; a.play().catch(()=>{}); } }
+function speakText(t){ try{ const u = new SpeechSynthesisUtterance(t); u.lang='en-US'; speechSynthesis.speak(u);}catch(e){} }
+
+/* update top */
+function updateTop(){
+  const list = state.stage === 1 ? STAGE1 : STAGE2;
+  const idx = state.stage === 1 ? state.idx1 : state.idx2;
+  els.levelNumber.textContent = Math.min(idx+1, list.length);
+  els.levelTotal.textContent = list.length;
+  const progress = ((Math.min(idx, list.length-1))/list.length)*100;
+  els.progressBar.style.width = `${progress}%`;
+  els.stars.textContent = `⭐ ${state.stars}`;
+  els.cups.textContent = state.cups > 0 ? `🏆 x${state.cups}` : '';
+  if(state.stage1Completed) els.stage2Btn.classList.remove('locked'); else els.stage2Btn.classList.add('locked');
+  if(state.stage === 2 && !state.stage1Completed) if(els.lockScreen) els.lockScreen.style.display = 'block'; else if(els.lockScreen) els.lockScreen.style.display = 'none';
+}
+
+/* render */
+function currentList(){ return state.stage===1?STAGE1:STAGE2; }
+function currentIndex(){ return state.stage===1?state.idx1:state.idx2; }
+function setIndex(n){ if(state.stage===1) state.idx1=n; else state.idx2=n; saveState(); }
+
+function render(){
+  updateTop();
+  const list = currentList();
+  const idx = currentIndex();
+  if(idx >= list.length){
+    els.wordImage.src=''; els.qText.textContent = `🎉 You finished Stage ${state.stage}!`; els.options.innerHTML=''; els.result.textContent='Well done!'; return;
+  }
+  const q = list[idx];
+  els.wordImage.src = emojiToDataURL(q.emoji || '❓', 360);
+  els.qText.textContent = q.q || 'Question';
+  els.result.textContent = '';
+  els.options.innerHTML = '';
+
+  if(q.type === 'mcq'){
+    q.options.forEach(opt=>{
+      const btn = document.createElement('button'); btn.textContent = opt;
+      btn.onclick = () => {
+        Array.from(els.options.children).forEach(b=>b.disabled=true);
+        if(opt === q.answer){
+          btn.classList.add('correct'); els.result.textContent = `✅ ${pick(['Great job!','Excellent!','Well done!','Awesome!'])}`; els.result.style.color='#1b5e20';
+          state.stars++; playGood(); speakText(q.answer); if(state.stars % 10 === 0) state.cups++; saveState();
+          setTimeout(()=>{ if(state.stage===1){ state.idx1++; if(state.idx1>=STAGE1.length){ state.stage1Completed=true; alert('🎉 Stage 1 finished! Stage 2 unlocked.'); } } else state.idx2++; saveState(); render(); },900);
+        } else { btn.classList.add('wrong'); els.result.textContent='❌ Try again!'; playBad(); setTimeout(()=>Array.from(els.options.children).forEach(b=>b.disabled=false),700); }
+        updateTop();
+      };
+      els.options.appendChild(btn);
+    });
+  } else if(q.type === 'missing'){
+    q.options.forEach(letter=>{
+      const btn = document.createElement('button'); btn.textContent = letter;
+      btn.onclick = () => {
+        Array.from(els.options.children).forEach(b=>b.disabled=true);
+        if(letter === q.answer){ btn.classList.add('correct'); els.result.textContent=`✅ Correct! Word: ${q.fullWord}`; state.stars++; playGood(); speakText(q.fullWord); if(state.stars % 10 === 0) state.cups++; saveState();
+          setTimeout(()=>{ if(state.stage===1){ state.idx1++; if(state.idx1>=STAGE1.length){ state.stage1Completed=true; alert('🎉 Stage 1 finished! Stage 2 unlocked.'); } } else state.idx2++; saveState(); render(); },1000);
+        } else { btn.classList.add('wrong'); els.result.textContent='❌ Try again!'; playBad(); setTimeout(()=>Array.from(els.options.children).forEach(b=>b.disabled=false),700); }
+        updateTop();
+      };
+      els.options.appendChild(btn);
+    });
+  } else if(q.type === 'truefalse'){
+    ['True','False'].forEach(opt=>{
+      const btn = document.createElement('button'); btn.textContent = opt;
+      btn.onclick = () => {
+        Array.from(els.options.children).forEach(b=>b.disabled=true);
+        if(opt === q.answer){ btn.classList.add('correct'); els.result.textContent=`✅ ${pick(['Great job!','Excellent!','Well done!'])}`; state.stars++; playGood(); speakText(q.answer); if(state.stars % 10 === 0) state.cups++; saveState();
+          setTimeout(()=>{ if(state.stage===1){ state.idx1++; if(state.idx1>=STAGE1.length){ state.stage1Completed=true; alert('🎉 Stage 1 finished! Stage 2 unlocked.'); } } else state.idx2++; saveState(); render(); },800);
+        } else { btn.classList.add('wrong'); els.result.textContent='❌ Try again!'; playBad(); setTimeout(()=>Array.from(els.options.children).forEach(b=>b.disabled=false),700); }
+        updateTop();
+      };
+      els.options.appendChild(btn);
+    });
+  }
+}
+
+/* UI handlers */
+els.speakBtn.addEventListener('click', ()=>{ const list = currentList(); const idx = currentIndex(); if(idx < list.length){ const q = list[idx]; if(q.type==='mcq') speakText(q.answer); else if(q.type==='missing') speakText(q.fullWord || q.answer); else speakText(q.answer); } });
+els.showAnswerBtn.addEventListener('click', ()=>{ const list = currentList(); const idx = currentIndex(); if(idx < list.length){ const q = list[idx]; els.result.textContent = q.type==='missing' ? `Answer: ${q.answer} (word: ${q.fullWord})` : `Answer: ${q.answer}`; els.result.style.color = '#444'; } });
+els.prevBtn.addEventListener('click', ()=>{ if(state.stage===1 && state.idx1>0) state.idx1--; else if(state.stage===2 && state.idx2>0) state.idx2--; saveState(); render(); });
+els.resetBtn.addEventListener('click', ()=>{ if(confirm('Reset all progress?')){ state = { stage:1, idx1:0, idx2:0, stars:0, cups:0, stage1Completed:false }; saveState(); render(); updateTop(); } });
+els.stage1Btn.addEventListener('click', ()=>{ state.stage=1; saveState(); render(); document.getElementById('level-total').textContent = STAGE1.length; });
+els.stage2Btn.addEventListener('click', ()=>{ if(!state.stage1Completed){ alert('Stage 2 locked — finish Stage 1 to unlock.'); return; } state.stage=2; saveState(); render(); document.getElementById('level-total').textContent = STAGE2.length; });
+
+/* progress modal */
+els.progressBtn.addEventListener('click', ()=> {
+  els.dashStage.textContent = state.stage;
+  els.dashStage1Completed.textContent = Math.min(state.idx1, STAGE1.length);
+  els.dashStage2Completed.textContent = Math.min(state.idx2, STAGE2.length);
+  els.dashStars.textContent = state.stars;
+  els.dashCups.textContent = state.cups;
+  const totalDone = Math.min(state.idx1, STAGE1.length) + Math.min(state.idx2, STAGE2.length);
+  const percent = Math.round((totalDone / (STAGE1.length + STAGE2.length)) * 100);
+  els.dashPercent.textContent = `${percent}%`;
+  els.modal.classList.remove('hidden'); els.modal.setAttribute('aria-hidden','false');
+});
+els.closeProgress.addEventListener('click', ()=> { els.modal.classList.add('hidden'); els.modal.setAttribute('aria-hidden','true'); });
+els.exportProgress.addEventListener('click', ()=> { console.log('Progress export:', JSON.stringify(state, null, 2)); alert('Progress exported to console (DevTools).'); });
+
+/* keyboard debug */
+window.addEventListener('keydown', (e)=> { if(e.key === '1') { state.stage = 1; saveState(); render(); } if(e.key === '2' && state.stage1Completed) { state.stage = 2; saveState(); render(); } });
+
+/* init */
+function load(){ try{ const s = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(s) state = Object.assign(state, s); }catch(e){} }
+function init(){ load(); if(state.idx1 < 0) state.idx1 = 0; if(state.idx2 < 0) state.idx2 = 0; document.getElementById('level-total').textContent = (state.stage === 1 ? STAGE1.length : STAGE2.length); if(state.stage1Completed) els.stage2Btn.classList.remove('locked'); else els.stage2Btn.classList.add('locked'); render(); updateTop(); saveState(); }
+init();
+
+/* debug expose */
+window.__STAGE1 = STAGE1; window.__STAGE2 = STAGE2;
+console.log('Initialized - STAGE1:', STAGE1.length, 'STAGE2:', STAGE2.length);
